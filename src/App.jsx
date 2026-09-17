@@ -10,6 +10,7 @@ import FAQ from './pages/FAQ';
 import Privacy from './pages/Privacy';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import TokenLedger from './pages/TokenLedger';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/properties" element={<Properties />} />
             <Route path="/properties/:id" element={<PropertyDetail />} />
             <Route path="/property-3d" element={<Property3D />} />
+            <Route path="/ledger" element={<TokenLedger />} />
             <Route path="/about" element={<About />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/faq" element={<FAQ />} />
