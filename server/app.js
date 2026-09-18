@@ -8,7 +8,7 @@ const paymentRouter = require("./routes/paymentRoute");
 const productRouter = require("./routes/productRoute");
 const userRouter = require("./routes/userRoute");
 const ledgerRouter = require("./routes/ledgerRoute");
-
+require('dotenv').config({ path: './.env' });
 const app = express();
 
 app.use(cors());
