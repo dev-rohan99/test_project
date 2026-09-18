@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 function TokenLedger() {
-  // --- ফ্রন্টএন্ড ইন-মেমোরি লেজার স্টেট (গ্লোবাল ব্যালেন্স স্টোর) ---
   const [balances, setBalances] = useState({});
 
   // Balance lookup state
@@ -25,7 +24,6 @@ function TokenLedger() {
   const [mintLoading, setMintLoading] = useState(false);
   const [transferLoading, setTransferLoading] = useState(false);
 
-  // অ্যাড্রেস ভ্যালিডেশন লজিক
   const isValidAddress = (address) => {
     if (!address || typeof address !== 'string') return false;
     const trimmed = address.trim();
@@ -38,7 +36,6 @@ function TokenLedger() {
     setError(null);
   };
 
-  // ১. চেক ব্যালেন্স হ্যান্ডলার
   const handleCheckBalance = (e) => {
     e.preventDefault();
     clearFeedback();
@@ -56,7 +53,6 @@ function TokenLedger() {
 
     setBalanceLoading(true);
     
-    // লোকাল স্টেট থেকে ব্যালেন্স রিড (১০০ms ফেক ডিলে জাস্ট রিয়ালিস্টিক লুকের জন্য)
     setTimeout(() => {
       const key = lookupAccount.trim().toLowerCase();
       const currentBalance = balances[key] || 0;
@@ -69,7 +65,6 @@ function TokenLedger() {
     }, 200);
   };
 
-  // ২. মিন্ট টোকেন হ্যান্ডলার
   const handleMint = (e) => {
     e.preventDefault();
     clearFeedback();
@@ -97,13 +92,11 @@ function TokenLedger() {
       const currentBalance = balances[key] || 0;
       const newBalance = currentBalance + numAmount;
 
-      // স্টেট আপডেট
       const updatedBalances = { ...balances, [key]: newBalance };
       setBalances(updatedBalances);
 
       setMessage(`Successfully minted ${numAmount} tokens to ${key}`);
 
-      // লাইভ ইউআই সিনক্রোনাইজেশন
       if (lookupAccount.trim().toLowerCase() === key) {
         setBalanceResult({ account: key, balance: newBalance });
       } else {
@@ -117,7 +110,6 @@ function TokenLedger() {
     }, 300);
   };
 
-  // ৩. ট্রান্সফার টোকেন হ্যান্ডলার
   const handleTransfer = (e) => {
     e.preventDefault();
     clearFeedback();
@@ -158,7 +150,6 @@ function TokenLedger() {
       const newSenderBalance = senderBalance - numAmount;
       const newReceiverBalance = (balances[toKey] || 0) + numAmount;
 
-      // স্টেট আপডেট
       const updatedBalances = {
         ...balances,
         [fromKey]: newSenderBalance,
@@ -168,7 +159,6 @@ function TokenLedger() {
 
       setMessage(`Successfully transferred ${numAmount} tokens`);
 
-      // লাইভ লুকআপ ব্যালেন্স রিফ্রেশ
       const currentLookupKey = lookupAccount.trim().toLowerCase();
       if (currentLookupKey === fromKey) {
         setBalanceResult({ account: fromKey, balance: newSenderBalance });
